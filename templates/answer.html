@@ -1,0 +1,21 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <h1>Answer</h1>
+        <p>Message: {{ message.text }}</p>
+        <textarea name="text" placeholder="Answer here..."></textarea>
+        <input type="text" name="message_id" value="{{ message.id }}" style="display: none">
+        <input type="text" name="receiver_id" value="{{ message.sender }}" style="display: none">
+        <button>Submit</button>
+    </form>
+</body>
+</html>

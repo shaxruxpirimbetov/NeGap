@@ -1,0 +1,20 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <p style="color: red;">{{ error }}</p>
+        <p>Message to {{ user.username }}</p>
+        <input style="display: none;" name="user_id" value="{{ user.id }}">
+        <textarea placeholder="Message to {{ user.username }}" name="text"></textarea>
+        <button>Send</button>
+    </form>
+</body>
+</html>

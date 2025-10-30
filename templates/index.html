@@ -1,0 +1,49 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>NeGap</h1>
+        {{ request.user.username }}
+        my link: <a href="{{ request.build_absolute_uri }}message?user_id={{ request.user.id }}">{{ request.build_absolute_uri }}message?user_id={{ request.user.id }}</a>
+    </header>
+
+    <main>
+        <a href="{% url 'user:register' %}">register</a>
+        <a href="{% url 'user:login' %}">login</a>
+        <a href="{% url 'user:logout' %}">Logout</a>
+
+        <div class="messages-list">
+            messages
+            {% for message in messages %}
+                <div class="message" onclick="location.assign('/answer?message_id={{ message.id }}')">
+                    <div class="text">{{ message.text }}</div>
+                    {% if message.is_answered %}
+                        <div class="status is_answered"></div>
+                    {% else %}
+                        <div class="status"></div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="messages-list">
+            answers
+            {% for answer in answers %}
+                <div class="message" onclick="location.assign('/answer?message_id={{ message.id }}')">
+                    <div class="text">{{ answer.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+</body>
+</html>

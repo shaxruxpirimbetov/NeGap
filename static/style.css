@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+:root {
+    --first-color: #1979EA;
+}
+
+body {
+    background: black;
+    color: white;
+
+}
+
+main { padding: 1em; }
+
+form {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    border: 2px solid white;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    align-items: center;
+    border-radius: 1em;
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.messages-list .message {
+    background: #2c2c2c;
+    padding: .5em;
+    border-radius: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.messages-list .message .status {
+    background: red;
+    height: 10px; width: 10px;
+    border-radius: 50%;
+}
+
+.messages-list .message .status.is_answered { background: green; }
