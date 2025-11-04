@@ -94,7 +94,8 @@ form {
     gap: .5em;
 }
 
-form input {
+form input,
+form textarea {
     background: none;
     border: none;
     font-size: 1.5em;
@@ -116,4 +117,12 @@ form button:active {
     background: white;
     color: var(--first-color);
     border: 2px solid var(--first-color);
+}
+
+.message-title { font-size: 1.25em; font-weight: 750; }
+.message-text {
+    background: #2c2c2c;
+    padding: .25em;
+    border-radius: .5em;
+    color: white;
 }

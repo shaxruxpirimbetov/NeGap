@@ -21,7 +21,8 @@
             </div>
             <div class="button" onclick="location.assign('{% url 'user:logout' %}')">Logout</div>
             <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
-            
+            <div class="button" onclick="location.assign('{% url 'user:login' %}')">Login</div>
+
         </div>
         {% else %}
         <div class="card">
@@ -38,10 +39,10 @@
             <div class="un-text"><div class="big strong">Messages</div> (вам написали)</div>
             <div class="messages-list">
                 {% for message in messages %}
-                {{ message }}
                 <div class="message-box">
                     <div class="message">{{ message.text }}</div>
-                    <div class="read-btn">Читать дальше</div>
+                    <div class="read-btn" onclick="location.assign('/answer?message_id={{ message.id }}')">Читать дальше</div>
+<!--                    <div class="read-btn" onclick="location.assign('/answer/')">Читать дальше</div>-->
                 </div>
                 {% endfor %}
             </div>
@@ -51,22 +52,25 @@
         <div class="card">
             <div class="un-text"><div class="big strong">Answers</div> (вам ответили)</div>
             <div class="messages-list">
+                {% for answer in answers %}
                 <div class="message-box">
-                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
-                    <div class="read-btn">Читать дальше</div>
+                    <div class="message">{{ answer.text }}</div>
+                    <div class="read-btn" onclick="location.assign('answer?answered_id={{ answer.id }}')">Читать дальше</div>
                 </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Your messages</div> (ваши сообщений)</div>
+            <div class="messages-list">
+                {% for message in my_messages %}
                 <div class="message-box">
-                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
-                    <div class="read-btn">Читать дальше</div>
+                    <div class="message">{{ message.text }}</div>
+                    <div class="read-btn" onclick="location.assign('/answer?is_empty=true&message_id={{ message.id }}')">Читать дальше</div>
                 </div>
-                <div class="message-box">
-                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
-                    <div class="read-btn">Читать дальше</div>
-                </div>
-                <div class="message-box">
-                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
-                    <div class="read-btn">Читать дальше</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         
