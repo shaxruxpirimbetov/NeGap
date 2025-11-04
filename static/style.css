@@ -5,51 +5,115 @@
     box-sizing: border-box;
     user-select: none;
 }
+main { padding: 1em; }
+body * {
+    display: flex;
+    flex-direction: column;
+}
 
 :root {
     --first-color: #1979EA;
 }
 
-body {
-    background: black;
+header {
+    background: var(--first-color);
+    padding: 1em;
     color: white;
-
 }
 
-main { padding: 1em; }
+header h1 { font-weight: 900; }
+
+.card {
+    padding: 1em;
+    box-shadow: 0 0 .5em grey;
+    border-radius: 1em;
+    margin: .25em 0;
+}
+
+
+.username {
+    font-size: 1.26em;
+    font-weight: 750;
+}
+
+.link {
+    background: grey;
+    padding: .15em;
+    border-radius: .15em;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.messages-list { gap: .25em; }
+.messages-list .message-box {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.messages-list .message-box .read-btn {
+    white-space: nowrap;
+    background: #D8D8D8;
+    font-weight: 500;
+    padding: .15em;
+    border-radius: .25em;
+}
+.messages-list .message-box .message {
+    font-weight: 550;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block ;
+}
+
+.un-text {
+    flex-direction: row;
+    align-items: center;
+}
+.un-text .strong { font-weight: 750; }
+.un-text .big { font-size: 1.5em; }
+
+.button {
+    background: #D8D8D8;
+    width: 100%;
+    padding: .5em;
+    text-align: center;
+    font-weight: 750;
+    border-radius: 1em;
+    margin: .25em;
+}
 
 form {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    border: 2px solid white;
     padding: 1em;
-    display: flex;
-    flex-direction: column;
-    gap: .5em;
+    box-shadow: 0 0 .5em grey;
+    border-radius: 1em;
     align-items: center;
-    border-radius: 1em;
-}
-
-.messages-list {
-    display: flex;
-    flex-direction: column;
     gap: .5em;
 }
 
-.messages-list .message {
-    background: #2c2c2c;
+form input {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    border-bottom: 2px solid var(--first-color);
+    width: 100%;
+}
+
+form button {
+    background: var(--first-color);
     padding: .5em;
-    border-radius: 1em;
-    display: flex;
-    justify-content: space-between;
+    color: white;
+    font-weight: 750;
+    border: 2px solid var(--first-color);
+    width: 100%;
+    font-size: 1.25em;
 }
 
-.messages-list .message .status {
-    background: red;
-    height: 10px; width: 10px;
-    border-radius: 50%;
+form button:active {
+    background: white;
+    color: var(--first-color);
+    border: 2px solid var(--first-color);
 }
-
-.messages-list .message .status.is_answered { background: green; }

@@ -25,10 +25,14 @@ class MessageView(View):
 		user_id = request.GET.get("user_id")
 		if not user_id:
 			return HttpResponse("User not found")
-		user = User.objects.filter(id=user_id).first()
+		user = User.objects.filter(first_name=user_id).first()
 		if not user:
 			return HttpResponse("User not found")
-
+		
+		if int(user.id) == int(request.user.id):
+			return render(request, "send_message.html", {"alert_err": "Нельзя отправить сообщение самому себе"})
+		
+		print(user_id, request.user.id)
 		user = UserSerializer(user).data
 		return render(request, "send_message.html", {"user": user})
 

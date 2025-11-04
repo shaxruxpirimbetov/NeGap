@@ -8,42 +8,78 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-
     <header>
         <h1>NeGap</h1>
-        {{ request.user.username }}
-        my link: <a href="{{ request.build_absolute_uri }}message?user_id={{ request.user.id }}">{{ request.build_absolute_uri }}message?user_id={{ request.user.id }}</a>
     </header>
-
     <main>
-        <a href="{% url 'user:register' %}">register</a>
-        <a href="{% url 'user:login' %}">login</a>
-        <a href="{% url 'user:logout' %}">Logout</a>
-
-        <div class="messages-list">
-            messages
-            {% for message in messages %}
-                <div class="message" onclick="location.assign('/answer?message_id={{ message.id }}')">
-                    <div class="text">{{ message.text }}</div>
-                    {% if message.is_answered %}
-                        <div class="status is_answered"></div>
-                    {% else %}
-                        <div class="status"></div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+        
+        {% if request.user.id %}
+        <div class="card index-user-info">
+            <div class="username">{{ request.user.username }}</div>
+            <div class="link">
+                <div class="url">{{ request.build_absolute_uri }}message?user_id={{ request.user.first_name }}</div>
+            </div>
+            <div class="button" onclick="location.assign('{% url 'user:logout' %}')">Logout</div>
+            <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
+            
         </div>
-
-        <div class="messages-list">
-            answers
-            {% for answer in answers %}
-                <div class="message" onclick="location.assign('/answer?message_id={{ message.id }}')">
-                    <div class="text">{{ answer.text }}</div>
-                </div>
-            {% endfor %}
+        {% else %}
+        <div class="card">
+            <div class="un-text">Login to get anon messages</div>
+            <br>
+            <div class="button" onclick="location.assign('{% url 'user:login' %}')">Login</div>
+            <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
+            
         </div>
-
+        {% endif %}
+ 
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Messages</div> (вам написали)</div>
+            <div class="messages-list">
+                {% for message in messages %}
+                {{ message }}
+                <div class="message-box">
+                    <div class="message">{{ message.text }}</div>
+                    <div class="read-btn">Читать дальше</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Answers</div> (вам ответили)</div>
+            <div class="messages-list">
+                <div class="message-box">
+                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
+                    <div class="read-btn">Читать дальше</div>
+                </div>
+                <div class="message-box">
+                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
+                    <div class="read-btn">Читать дальше</div>
+                </div>
+                <div class="message-box">
+                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
+                    <div class="read-btn">Читать дальше</div>
+                </div>
+                <div class="message-box">
+                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis officia optio nisi doloremque rerum, quia. Maiores omnis rerum consectetur enim excepturi esse vitae ex, repellendus placeat nesciunt quod quo consequatur.</div>
+                    <div class="read-btn">Читать дальше</div>
+                </div>
+            </div>
+        </div>
+        
     </main>
 
+<script>
+    var linkBox = document.querySelector(".link")
+    var linkUrl = document.querySelector(".link .url")
+    
+    linkBox.onclick = () => {
+        navigator.clipboard.writeText(linkUrl.textContent)
+        alert("Copied")
+    }
+</script>
 </body>
 </html>

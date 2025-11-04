@@ -16,5 +16,14 @@
         <textarea placeholder="Message to {{ user.username }}" name="text"></textarea>
         <button>Send</button>
     </form>
+
+{% if alert_err %}
+    <script>
+        alert( "{{ alert_err }}" )
+        history.back()
+    </script>
+    must_work
+{% endif %}
+
 </body>
 </html>
