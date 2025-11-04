@@ -23,6 +23,10 @@
             <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
             <div class="button" onclick="location.assign('{% url 'user:login' %}')">Login</div>
 
+            {% if request.user.is_superuser and request.user.is_staff %}
+                <div class="button" onclick="location.assign('/admin/')">Admin</div>
+            {% endif %}
+
         </div>
         {% else %}
         <div class="card">

