@@ -24,22 +24,20 @@
                     <ul>
                         <li><a href="#features">Возможности</a></li>
                         <li><a href="#how-it-works">Как это работает</a></li>
-                        <li><a href="#profile">Мой профиль</a></li>
+                        {% if not request.user.is_anonymous %}<li><a href="#profile">Мой профиль</a></li>{% endif %}
                         <li><a href="#send-message">Отправить сообщение</a></li>
                     </ul>
                 </nav>
 
                 <div class="auth-buttons">
-                    {% if request.user.is_anonymous %}
-                        <a href="#" class="btn btn-outline">Войти</a>
-                        <a href="#" class="btn btn-primary">Регистрация</a>
-                    {% else %}
+                    {% if not request.user.is_anonymous %}
                         <a href="#" class="btn btn-outline">Выйти</a>
                         <a href="#" class="btn btn-primary">Авторизоваться</a>
+                    {% else %}
+                        <a href="#" class="btn btn-outline" id="login-btn">Войти</a>
+                        <a href="#" class="btn btn-primary" id="register-btn">Регистрация</a>
                     {% endif %}
                 </div>
-
-                <div class="mobile-menu">☰</div>
             </div>
         </div>
     </header>
@@ -52,7 +50,11 @@
                     <h1>Получайте анонимные сообщения от друзей</h1>
                     <p>NeGap позволяет вам получать честные отзывы и анонимные сообщения от ваших друзей, коллег и поклонников без раскрытия их личности.</p>
                     <div class="hero-buttons">
-                        <a href="#profile" class="btn btn-primary">Создать профиль</a>
+                        {% if not request.user.is_anonymous %}
+                        <a href="#profile" class="btn btn-primary">Отправить сообщение</a>
+                        {% else %}
+                        <a href="#profile" class="btn btn-primary" id="hero-register-btn">Создать профиль</a>
+                        {% endif %}
                         <a href="#how-it-works" class="btn btn-outline">Узнать больше</a>
                     </div>
                 </div>
@@ -135,92 +137,79 @@
             </div>
 
             <div class="profile-container">
-                {% if not request.user.is_anonymous %}
-                    <div class="profile-sidebar">
-                        <div class="profile-info">
-                            <div class="avatar">S</div>
-                            <h3>Пользователь</h3>
-                            <p>@username</p>
-                        </div>
-
-                        <div class="profile-stats">
-                            <div class="stat">
-                                <div class="stat-value">24</div>
-                                <div class="stat-label">Сообщения</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-value">15</div>
-                                <div class="stat-label">Дней</div>
-                            </div>
-                        </div>
-
-                        <a href="#" class="btn btn-primary" style="width: 100%;">Настройки профиля</a>
+                <div class="profile-sidebar">
+                    <div class="profile-info">
+                        <div class="avatar">U</div>
+                        <h3>Пользователь</h3>
+                        <p>@username</p>
                     </div>
 
-                    <div class="profile-main">
-                        <div class="share-link">
-                            <h3>Поделитесь своей ссылкой</h3>
-                            <div class="link-container">
-                                <input type="text" class="link-input" value="https://negap.com/u/username" readonly>
-
-                                <button class="copy-btn">Копировать</button>
-                            </div>
-                            <p>Отправьте эту ссылку друзьям, чтобы они могли отправлять вам анонимные сообщения</p>
-                            <div class="social-share">
-                                <a href="#" class="social-btn">Tg</a>
-                                <a href="#" class="social-btn">Vk</a>
-                                <a href="#" class="social-btn">Inst</a>
-                                <a href="#" class="social-btn">Tw</a>
-                            </div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Сообщения</div>
                         </div>
-                        <div class="messages-container">
-                            <div class="messages-header">
-                                <h3>Полученные сообщения</h3>
-                                <div class="filter">
-                                    <select class="form-control" style="width: auto; display: inline-block;">
-                                        <option>Все сообщения</option>
-                                        <option>Только положительные</option>
-                                        <option>Только вопросы</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="message-card">
-                                <div class="message-meta">
-                                    <span>Аноним</span>
-                                    <span>2 часа назад</span>
-                                </div>
-                                <p>Привет! Мне очень нравится твой контент. Продолжай в том же духе!</p>
-                            </div>
-
-                            <div class="message-card">
-                                <div class="message-meta">
-                                    <span>Аноним</span>
-                                    <span>Вчера</span>
-                                </div>
-                                <p>Как ты находишь время для всех своих проектов? Можешь поделиться советом по тайм-менеджменту?</p>
-                            </div>
-
-                            <div class="message-card">
-                                <div class="message-meta">
-                                    <span>Аноним</span>
-                                    <span>3 дня назад</span>
-                                </div>
-                                <p>Ты вдохновляешь меня становиться лучше каждый день. Спасибо за это!</p>
-                            </div>
+                        <div class="stat">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Дней</div>
                         </div>
-
-                {% else %}
-                    <div class="profile-sidebar">
-                        <div class="profile-info">
-                            <div class="avatar">S</div>
-                            <h3>Пользователь</h3>
-                        </div>
-
-                        <a href="#" class="btn btn-primary" style="width: 100%;">Регистрация</a>
                     </div>
-                    <h1 style="color: black;">Не авторизовано</h1>
-                {% endif %}
+
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Настройки профиля</a>
+                </div>
+
+                <div class="profile-main">
+                    <div class="share-link">
+                        <h3>Поделитесь своей ссылкой</h3>
+                        <div class="link-container">
+                            <input type="text" class="link-input" value="https://negap.com/u/username" readonly>
+                            <button class="copy-btn">Копировать</button>
+                        </div>
+                        <p>Отправьте эту ссылку друзьям, чтобы они могли отправлять вам анонимные сообщения</p>
+                        <div class="social-share">
+                            <a href="#" class="social-btn">Tg</a>
+                            <a href="#" class="social-btn">Vk</a>
+                            <a href="#" class="social-btn">Inst</a>
+                            <a href="#" class="social-btn">Tw</a>
+                        </div>
+                    </div>
+
+                    <div class="messages-container">
+                        <div class="messages-header">
+                            <h3>Полученные сообщения</h3>
+                            <div class="filter">
+                                <select class="form-control" style="width: auto; display: inline-block;">
+                                    <option>Все сообщения</option>
+                                    <option>Только положительные</option>
+                                    <option>Только вопросы</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>2 часа назад</span>
+                            </div>
+                            <p>Привет! Мне очень нравится твой контент. Продолжай в том же духе!</p>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>Вчера</span>
+                            </div>
+                            <p>Как ты находишь время для всех своих проектов? Можешь поделиться советом по тайм-менеджменту?</p>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>3 дня назад</span>
+                            </div>
+                            <p>Ты вдохновляешь меня становиться лучше каждый день. Спасибо за это!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,5 +300,146 @@
             </div>
         </div>
     </footer>
+
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Вход в NeGap</div>
+                <div class="close-modal" id="close-modal">&times;</div>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Вход</div>
+                <div class="auth-tab" data-tab="register">Регистрация</div>
+            </div>
+
+            <form class="auth-form active" id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email или имя пользователя</label>
+                    <input type="text" id="login-email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Войти</button>
+
+                <div style="text-align: center;">
+                    <a href="#" style="color: var(--primary-color);">Забыли пароль?</a>
+                </div>
+            </form>
+
+            <form class="auth-form" id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Имя пользователя</label>
+                    <input type="text" id="register-username" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password">Пароль</label>
+                    <input type="password" id="register-password" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password-confirm">Подтверждение пароля</label>
+                    <input type="password" id="register-password-confirm" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Simple modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const authModal = document.getElementById('auth-modal');
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const heroRegisterBtn = document.getElementById('hero-register-btn');
+            const closeModal = document.getElementById('close-modal');
+            const authTabs = document.querySelectorAll('.auth-tab');
+            const authForms = document.querySelectorAll('.auth-form');
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            // Open modal
+            function openModal() {
+                authModal.style.display = 'flex';
+            }
+
+            // Close modal
+            function closeModalFunc() {
+                authModal.style.display = 'none';
+            }
+
+            // Switch tabs
+            function switchTab(tabName) {
+                authTabs.forEach(tab => {
+                    if (tab.dataset.tab === tabName) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+
+                authForms.forEach(form => {
+                    if (form.id === `${tabName}-form`) {
+                        form.classList.add('active');
+                    } else {
+                        form.classList.remove('active');
+                    }
+                });
+            }
+
+            // Event listeners
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+                switchTab('login');
+            });
+
+            registerBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+                switchTab('register');
+            });
+
+            heroRegisterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+                switchTab('register');
+            });
+
+            closeModal.addEventListener('click', closeModalFunc);
+
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // FAQ functionality
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', function() {
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === authModal) {
+                    closeModalFunc();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

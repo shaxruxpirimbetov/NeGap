@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeGap - Анонимные сообщения</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1979EA;
+            --primary-light: #e8f2ff;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --border-color: #dee2e6;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+            font-family: "Sansation", sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-light) 0%, white 100%);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--gray-color);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--gray-color);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: var(--primary-light);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background-color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 0 15px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: var(--gray-color);
+        }
+
+        /* Profile Section */
+        .profile {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .profile-container {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        .profile-sidebar {
+            flex: 0 0 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary-color);
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .profile-main {
+            flex: 1;
+        }
+
+        .share-link {
+            background-color: var(--primary-light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .share-link h3 {
+            margin-bottom: 15px;
+        }
+
+        .link-container {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .link-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px 0 0 5px;
+            background-color: white;
+        }
+
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        .social-share {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+        }
+
+        .messages-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .message-card {
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        /* Send Message */
+        .send-message {
+            padding: 80px 0;
+            background-color: var(--primary-light);
+        }
+
+        .message-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-sidebar {
+                flex: 1;
+                width: 100%;
+            }
+
+            .steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .steps::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🔒</span>
+                    <span>NeGap</span>
+                </a>
+
+                <nav>
+                    <ul>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#how-it-works">Как это работает</a></li>
+                        <li><a href="#profile">Мой профиль</a></li>
+                        <li><a href="#send-message">Отправить сообщение</a></li>
+                    </ul>
+                </nav>
+
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Войти</a>
+                    <a href="#" class="btn btn-primary">Регистрация</a>
+                </div>
+
+                <div class="mobile-menu">☰</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Получайте анонимные сообщения от друзей</h1>
+                    <p>NeGap позволяет вам получать честные отзывы и анонимные сообщения от ваших друзей, коллег и поклонников без раскрытия их личности.</p>
+                    <div class="hero-buttons">
+                        <a href="#profile" class="btn btn-primary">Создать профиль</a>
+                        <a href="#how-it-works" class="btn btn-outline">Узнать больше</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <!-- Placeholder for image -->
+                    <div style="width: 100%; height: 300px; background-color: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 18px;">
+                        Иллюстрация: Анонимные сообщения
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Почему NeGap?</h2>
+                <p>Наша платформа предоставляет безопасный и простой способ получать честные отзывы и сообщения</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Полная анонимность</h3>
+                    <p>Отправители остаются полностью анонимными. Мы не храним данные, которые могут их идентифицировать.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Простота использования</h3>
+                    <p>Создайте профиль за минуту и начните получать сообщения сразу же. Никаких сложных настроек.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Адаптивный дизайн</h3>
+                    <p>Идеально работает на любом устройстве - компьютере, планшете или смартфоне.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Как это работает</h2>
+                <p>Всего три простых шага, чтобы начать получать анонимные сообщения</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Создайте профиль</h3>
+                    <p>Зарегистрируйтесь и создайте свой уникальный профиль за пару минут.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Поделитесь ссылкой</h3>
+                    <p>Скопируйте свою уникальную ссылку и поделитесь ею с друзьями в соцсетях.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Получайте сообщения</h3>
+                    <p>Начните получать анонимные сообщения и откройте для себя, что о вас думают другие.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile" id="profile">
+        <div class="container">
+            <div class="section-title">
+                <h2>Мой профиль</h2>
+                <p>Управляйте своими настройками и просматривайте полученные сообщения</p>
+            </div>
+
+            <div class="profile-container">
+                <div class="profile-sidebar">
+                    <div class="profile-info">
+                        <div class="avatar">U</div>
+                        <h3>Пользователь</h3>
+                        <p>@username</p>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Сообщения</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Дней</div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Настройки профиля</a>
+                </div>
+
+                <div class="profile-main">
+                    <div class="share-link">
+                        <h3>Поделитесь своей ссылкой</h3>
+                        <div class="link-container">
+                            <input type="text" class="link-input" value="https://negap.com/u/username" readonly>
+                            <button class="copy-btn">Копировать</button>
+                        </div>
+                        <p>Отправьте эту ссылку друзьям, чтобы они могли отправлять вам анонимные сообщения</p>
+                        <div class="social-share">
+                            <a href="#" class="social-btn">Tg</a>
+                            <a href="#" class="social-btn">Vk</a>
+                            <a href="#" class="social-btn">Inst</a>
+                            <a href="#" class="social-btn">Tw</a>
+                        </div>
+                    </div>
+
+                    <div class="messages-container">
+                        <div class="messages-header">
+                            <h3>Полученные сообщения</h3>
+                            <div class="filter">
+                                <select class="form-control" style="width: auto; display: inline-block;">
+                                    <option>Все сообщения</option>
+                                    <option>Только положительные</option>
+                                    <option>Только вопросы</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>2 часа назад</span>
+                            </div>
+                            <p>Привет! Мне очень нравится твой контент. Продолжай в том же духе!</p>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>Вчера</span>
+                            </div>
+                            <p>Как ты находишь время для всех своих проектов? Можешь поделиться советом по тайм-менеджменту?</p>
+                        </div>
+
+                        <div class="message-card">
+                            <div class="message-meta">
+                                <span>Аноним</span>
+                                <span>3 дня назад</span>
+                            </div>
+                            <p>Ты вдохновляешь меня становиться лучше каждый день. Спасибо за это!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Send Message -->
+    <section class="send-message" id="send-message">
+        <div class="container">
+            <div class="section-title">
+                <h2>Отправить анонимное сообщение</h2>
+                <p>Напишите сообщение пользователю NeGap, оставаясь полностью анонимным</p>
+            </div>
+
+            <div class="message-form">
+                <form>
+                    <div class="form-group">
+                        <label for="profile-link">Ссылка на профиль получателя</label>
+                        <input type="text" id="profile-link" class="form-control" placeholder="https://negap.com/u/username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Ваше сообщение</label>
+                        <textarea id="message" class="form-control" placeholder="Напишите ваше анонимное сообщение здесь..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message-type">Тип сообщения</label>
+                        <select id="message-type" class="form-control">
+                            <option>Обычное сообщение</option>
+                            <option>Вопрос</option>
+                            <option>Комплимент</option>
+                            <option>Конструктивная критика</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить анонимно</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>NeGap</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Центр поддержки</a></li>
+                        <li><a href="#">Правила использования</a></li>
+                        <li><a href="#">Конфиденциальность</a></li>
+                        <li><a href="#">Сообщить о проблеме</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Сообщество</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">VKontakte</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Подписка</h3>
+                    <p>Подпишитесь на рассылку, чтобы получать новости о обновлениях</p>
+                    <div class="link-container" style="margin-top: 15px;">
+                        <input type="email" class="link-input" placeholder="Ваш email">
+                        <button class="copy-btn">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2023 NeGap. Все права защищены.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

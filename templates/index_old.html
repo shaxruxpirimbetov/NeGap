@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style_old.css' %}">
+</head>
+<body>
+    <header>
+        <h1>NeGap</h1>
+    </header>
+    <main>
+        
+        {% if request.user.id %}
+        <div class="card index-user-info">
+            <div class="username">{{ request.user.username }}</div>
+            <div class="link">
+                <div class="url">{{ request.build_absolute_uri }}message?user_id={{ request.user.first_name }}</div>
+            </div>
+            <div class="button" onclick="location.assign('{% url 'user:logout' %}')">Logout</div>
+            <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
+            <div class="button" onclick="location.assign('{% url 'user:login' %}')">Login</div>
+
+            {% if request.user.is_superuser and request.user.is_staff %}
+                <div class="button" onclick="location.assign('/admin/')">Admin</div>
+            {% endif %}
+
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="un-text">Login to get anon messages</div>
+            <br>
+            <div class="button" onclick="location.assign('{% url 'user:login' %}')">Login</div>
+            <div class="button" onclick="location.assign('{% url 'user:register' %}')">Register</div>
+            
+        </div>
+        {% endif %}
+ 
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Messages</div> (вам написали)</div>
+            <div class="messages-list">
+                {% for message in messages %}
+                <div class="message-box">
+                    <div class="message">{{ message.text }}</div>
+                    <div class="read-btn" onclick="location.assign('/answer?message_id={{ message.id }}')">Читать дальше</div>
+<!--                    <div class="read-btn" onclick="location.assign('/answer/')">Читать дальше</div>-->
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Answers</div> (вам ответили)</div>
+            <div class="messages-list">
+                {% for answer in answers %}
+                <div class="message-box">
+                    <div class="message">{{ answer.text }}</div>
+                    <div class="read-btn" onclick="location.assign('answer?answered_id={{ answer.id }}')">Читать дальше</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <br>
+        <div class="card">
+            <div class="un-text"><div class="big strong">Your messages</div> (ваши сообщений)</div>
+            <div class="messages-list">
+                {% for message in my_messages %}
+                <div class="message-box">
+                    <div class="message">{{ message.text }}</div>
+                    <div class="read-btn" onclick="location.assign('/answer?is_empty=true&message_id={{ message.id }}')">Читать дальше</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </main>
+
+<script>
+    var linkBox = document.querySelector(".link")
+    var linkUrl = document.querySelector(".link .url")
+    
+    linkBox.onclick = () => {
+        navigator.clipboard.writeText(linkUrl.textContent)
+        alert("Copied")
+    }
+</script>
+</body>
+</html>
