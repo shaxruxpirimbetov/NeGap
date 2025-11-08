@@ -36,6 +36,8 @@ class MessageView(View):
 			return render(request, "send_message.html", {"alert_err": "Нельзя отправить сообщение самому себе"})
 
 		user = UserSerializer(user).data
+		if request.user.is_anonymous:
+			return render(request, "send_message.html", {"user": user, "warning": "You cant see answer without login"})
 		return render(request, "send_message.html", {"user": user})
 
 	def post(self, request):
@@ -81,6 +83,10 @@ class AnswerView(View):
 		message = Message.objects.filter(id=message_id).first()
 		if not message:
 			return HttpResponse("message not found")
+
+		if not message.sender:
+			return render(request, "answer_view.html", {"message": message, "is_sender_none": True})
+
 		message = MessageSerializer(message).data
 		return render(request, "answer.html", {"message": message})
 

@@ -14,7 +14,11 @@
     <main>
 
         <div class="card">
-            <div class="message-title">Ваш сообщение</div>
+            {% if is_sender_none %}
+                <div class="message-title">Сообщение из неавторизованного пользователя</div>
+            {% else %}
+                <div class="message-title">Ваш сообщение</div>
+            {% endif %}
             <div class="message-text">{{ message.text }}</div>
         </div>
 
