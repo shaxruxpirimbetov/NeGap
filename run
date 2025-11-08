@@ -1,0 +1,8 @@
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+git config --global user.email "shaxruxpirimbetov@gmail.com"
+git config --global user.name "shaxruxpirimbetov"
+
+git remote add origin https://github.com/shaxruxpirimbetov/NeGap.git
