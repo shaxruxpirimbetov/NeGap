@@ -6,3 +6,5 @@ git config --global user.email "shaxruxpirimbetov@gmail.com"
 git config --global user.name "shaxruxpirimbetov"
 
 git remote add origin https://github.com/shaxruxpirimbetov/NeGap.git
+
+git clone https://github.com/shaxruxpirimbetov/NeGap.git
