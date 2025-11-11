@@ -15,6 +15,7 @@
         <h1>NeGap</h1>
         <nav>
             <div class="link active">Главная</div>
+            {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
             {% if request.user.is_anonymous %}
                 <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>
                 <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
@@ -29,7 +30,7 @@
         <div class="strong-centered-text">Получайте анонимные сообщения от друзей</div>
         <div class="p-centered-text">NeGap позволяет вам получать честные отзывы и анонимные сообщения от ваших друзей, коллег и поклонников без раскрытия их личности.</div>
         <br>
-        <div class="button-full">Создать профиль</div>
+        <div class="button-full" onclick="location.assign('{% url 'user:register' %}')">Создать профиль</div>
 
         <br><br>
 
