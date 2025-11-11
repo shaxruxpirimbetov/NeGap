@@ -9,7 +9,7 @@ import secrets
 
 class RegisterView(View):
 	def get(self, request):
-		return render(request, "register.html")
+		return render(request, "auth/register.html")
 	
 	def post(self, request):
 		username = request.POST.get("username")
@@ -17,17 +17,17 @@ class RegisterView(View):
 		password2 = request.POST.get("password2")
 		
 		if not all([username, password, password2]):
-			return render(request, "register.html", {"error": "username, password and password2 are required"})
+			return render(request, "auth/register.html", {"error": "username, password and password2 are required"})
 
 		if password != password2:
-			return render(request, "register.html", {"error": "Password not match"})
+			return render(request, "auth/register.html", {"error": "Password not match"})
 		
 		user = User.objects.filter(username=username).first()
 		if user:
-			return render(request, "register.html", {"error": "username already exists"})
+			return render(request, "auth/register.html", {"error": "username already exists"})
 		
 		for _ in range(10):
-			token = secrets.token_hex(16)
+			token = secrets.token_hex(8)
 			user = User.objects.filter(first_name=token).first()
 			if not user:
 				user = User.objects.create_user(username=username, password=password, first_name=token)
@@ -38,29 +38,29 @@ class RegisterView(View):
 
 				login(request, user)
 				return redirect("main:home")
-		return render(request, "register.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
+		return render(request, "auth/register.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
 
 
 class LoginView(View):
 	def get(self, request):
-		return render(request, "login.html")
+		return render(request, "auth/login.html")
 
 	def post(self, request):
 		username = request.POST.get("username")
 		password = request.POST.get("password")
 		
 		if not all([username, password]):
-			return render(request, "login.html", {"error": "username and password are refunded"})
+			return render(request, "auth/login.html", {"error": "username and password are refunded"})
 		
 		user = User.objects.filter(username=username).first()
 		if not user:
-			return render(request, "login.html", {"error": "user not found"})
+			return render(request, "auth/login.html", {"error": "user not found"})
 		
 		if check_password(password, user.password):
 			login(request, user)
 			return redirect("main:home")
 
-		return render(request, "login.html", {"error": "password not match"})
+		return render(request, "auth/login.html", {"error": "password not match"})
 
 
 class LogoutView(View):

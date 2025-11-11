@@ -1,0 +1,108 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>NeGap</h1>
+        <nav>
+            <div class="link active">Главная</div>
+            <div class="link">Выйти</div>
+            <div class="link">Профиль</div>
+        </nav>
+    </header>
+    <main>
+
+        <div class="strong-centered-text">Мы рада вас видеть снова😉</div>
+
+        <br>
+
+        <div class="card" style="border-radius: 1em;">
+            <h2>Ваш ссылка</h2>
+            <p class="user-link">{{ request.build_absolute_uri }}/message/user_id={{ request.user.first_name }}</p>
+
+            <div class="wrote-datas">
+                <div class="data">
+                    <div class="title">Ваши сообщения</div>
+                    <div class="quantity">121</div>
+                </div>
+                <div class="data">
+                    <div class="title">Вам написали</div>
+                    <div class="quantity">132</div>
+                </div>
+                <div class="data">
+                    <div class="title">Вам ответили</div>
+                    <div class="quantity">102</div>
+                </div>
+            </div>
+            <div class="button-full" style="width: 15em; margin: auto; text-align: center;" onclick="location.assign('{% url 'main:message' %}')">Отправить сообщение</div>
+
+            <br><br>
+            <h2>Также список сообщений</h2>
+            <br>
+
+            <div class="messages-list">
+                <div class="message">
+                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
+                    <div class="icon"></div>
+                </div>
+                <div class="message">
+                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
+                    <div class="icon"></div>
+                </div>
+                <div class="message">
+                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
+                    <div class="icon"></div>
+                </div>
+                <div class="message">
+                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
+                    <div class="icon"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="strong-centered-text">Почему NeGap?</div>
+        <div class="p-centered-text">Наша платформа предоставляет безопасный и простой способ получать честные отзывы и сообщения</div>
+        <br>
+
+        <div class="why-boxes">
+            <div class="card">
+                <div class="icon">🔒</div>
+                <div class="strong-centered-text">Полная анонимность</div>
+                <p>Отправители остаются полностью анонимными. Мы не храним данные, которые могут их идентифицировать</p>
+            </div>
+            <div class="card">
+                <div class="icon">🚀</div>
+                <div class="strong-centered-text">Простота использования</div>
+                <p>Создайте профиль за минуту и начните получать сообщения сразу же. Никаких сложных настроек.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📱</div>
+                <div class="strong-centered-text">Адаптивный дизайн</div>
+                <p>Идеально работает на любом устройстве - компьютере, планшете или смартфоне.</p>
+            </div>
+        </div>
+
+    </main>
+    <footer>
+
+        <p>© 2025 NeGap. Все права защищены.</p>
+        <div class="links">
+            <a href="reg">Регистрация</a>
+            <a href="auth">Авторизоваться</a>
+        </div>
+
+    </footer>
+</body>
+</html>

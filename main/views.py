@@ -10,7 +10,7 @@ from .serializers import MessageSerializer, AnswerSerializer
 class HomeView(View):
 	def get(self, request):
 		context = {}
-		if request.user.id:
+		if not request.user.is_anonymous:
 			messages = Message.objects.filter(receiver=request.user)
 			messages = MessageSerializer(messages, many=True).data
 			my_messages = Message.objects.filter(sender=request.user)
@@ -20,6 +20,7 @@ class HomeView(View):
 			context["messages"] = messages
 			context["my_messages"] = my_messages
 			context["answers"] = answers
+			return render(request, "aindex.html", context)
 
 		return render(request, "index.html", context)
 
@@ -27,9 +28,14 @@ class HomeView(View):
 class MessageView(View):
 	def get(self, request):
 		user_id = request.GET.get("user_id")
-		if not user_id:
-			return HttpResponse("User not found")
-		user = User.objects.filter(first_name=user_id).first()
+		url = request.GET.get("url")
+		token = url.split("=")[1] if url else user_id
+
+		if not user_id and not token:
+			return render(request, "send_message.html", {"warning": "user is not defined"})
+
+		print(token)
+		user = User.objects.filter(first_name=token).first()
 		if not user:
 			return HttpResponse("User not found")
 

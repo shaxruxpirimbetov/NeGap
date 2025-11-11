@@ -1,0 +1,63 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>NeGap</h1>
+        <nav>
+            <div class="link active">Главная</div>
+            <div class="link">Выйти</div>
+            <div class="link">Профиль</div>
+        </nav>
+    </header>
+    <main>
+
+        {% if warning == "user is not defined" %}
+            <div class="card" style="width: 100%;">
+                <div class="strong-centered-text">Введите ссылку пользователя</div>
+                <form class="form-container" style="margin: auto; width: 100%;">
+                    <div class="input-box">
+                        <label>Ссылка</label>
+                        <input name="url" type="url" placeholder="Ссылка">
+                    </div>
+                    <button>Найти пользователя</button>
+                </form>
+            </div>
+        {% else %}
+            <form class="form-container send-message-from">
+                <div class="title">Отправить к</div>
+                <div class="receiver-box">
+                    <div class="username">{{ user.username }}</div>
+                    <div class="link">{{ request.build_absolute_uri }}message?user_id={{ user.first_name }}</div>
+                </div>
+                <div class="input-box">
+                    <label for="text">Сообщение</label>
+                    <textarea name="text"></textarea>
+                </div>
+                <input type="number" name="user_id" style="display: none" value="{{ user.id }}">
+                <button>Отправить сообщение</button>
+            </form>
+        {% endif %}
+
+
+    </main>
+    <footer>
+
+        <p>© 2025 NeGap. Все права защищены.</p>
+        <div class="links">
+            <a href="reg">Регистрация</a>
+            <a href="auth">Авторизоваться</a>
+        </div>
+
+    </footer>
+</body>
+</html>
