@@ -10,7 +10,6 @@ from .serializers import MessageSerializer, AnswerSerializer
 class HomeView(View):
 	def get(self, request):
 		context = {}
-		print(dir(request.user))
 		if request.user.id:
 			messages = Message.objects.filter(receiver=request.user)
 			messages = MessageSerializer(messages, many=True).data
@@ -22,7 +21,7 @@ class HomeView(View):
 			context["my_messages"] = my_messages
 			context["answers"] = answers
 
-		return render(request, "index_old.html", context)
+		return render(request, "index.html", context)
 
 
 class MessageView(View):
