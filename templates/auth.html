@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>NeGap</h1>
+        <nav>
+            <div class="link active">Home</div>
+            <div class="link">Register</div>
+            <div class="link">Login</div>
+        </nav>
+    </header>
+    <main>
+
+        <div class="margin-block"></div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <div class="form-choose login-choose active">Вход</div>
+                <div class="form-choose register-choose">Регистрация</div>
+            </div>
+            <form class="login-container">
+                <div class="title">Вход в аккаунт</div>
+                <div class="input-box">
+                    <label for="username">Имя</label>
+                    <input type="text" name="username" placeholder="Username">
+                </div>
+                <div class="input-box">
+                    <label for="password">Пароль</label>
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+                <button type="button">Войти</button>
+            </form>
+            <form class="register-container">
+                <div class="title">Создание аккаунта</div>
+                <div class="input-box">
+                    <label for="username">Имя</label>
+                    <input type="text" name="username" placeholder="Username">
+                </div>
+                <div class="input-box">
+                    <label for="password">Пароль</label>
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+                <button type="button">Регистрация</button>
+            </form>
+        </div>
+
+        <div class="margin-block"></div>
+
+    </main>
+    <footer>
+
+        <p>© 2025 NeGap. Все права защищены.</p>
+        <div class="links">
+            <a href="reg">Регистрация</a>
+            <a href="auth">Авторизоваться</a>
+        </div>
+
+    </footer>
+<script>
+    var loginChoose = document.querySelector(".login-choose")
+    var registerChoose = document.querySelector(".register-choose")
+    var loginBox = document.querySelector(".login-container")
+    var registerBox = document.querySelector(".register-container")
+
+    registerBox.style.display = "none"
+
+    loginChoose.onclick = () => {
+        registerBox.style.display = "none"
+        loginBox.style.display = "block"
+        loginChoose.className = "form-choose login-choose active"
+        registerChoose.className = "form-choose register-choose"
+    }
+
+    registerChoose.onclick = () => {
+        loginBox.style.display = "none"
+        registerBox.style.display = "block"
+        registerChoose.className = "form-choose register-choose active"
+        loginChoose.className = "form-choose login-choose"
+    }
+
+</script>
+</body>
+</html>

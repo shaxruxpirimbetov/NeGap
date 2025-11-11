@@ -9,18 +9,18 @@ import secrets
 
 class RegisterView(View):
 	def get(self, request):
-		return render(request, "auth/register.html")
+		return render(request, "auth.html")
 	
 	def post(self, request):
 		username = request.POST.get("username")
 		password = request.POST.get("password")
 		
 		if not all([username, password]):
-			return render(request, "auth/register.html", {"error": "username and password are required"})
+			return render(request, "auth.html", {"error": "username and password are required"})
 		
 		user = User.objects.filter(username=username).first()
 		if user:
-			return render(request, "auth/register.html", {"error": "username already exists"})
+			return render(request, "auth.html", {"error": "username already exists"})
 		
 		for _ in range(10):
 			token = secrets.token_hex(16)
@@ -34,29 +34,29 @@ class RegisterView(View):
 
 				login(request, user)
 				return redirect("main:home")
-		return render(request, "auth/register.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
+		return render(request, "auth.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
 
 
 class LoginView(View):
 	def get(self, request):
-		return render(request, "auth/login.html")
+		return render(request, "auth.html")
 
 	def post(self, request):
 		username = request.POST.get("username")
 		password = request.POST.get("password")
 		
 		if not all([username, password]):
-			return render(request, "auth/login.html", {"error": "username and password are refunded"})
+			return render(request, "auth.html", {"error": "username and password are refunded"})
 		
 		user = User.objects.filter(username=username).first()
 		if not user:
-			return render(request, "auth/login.html", {"error": "user not found"})
+			return render(request, "auth.html", {"error": "user not found"})
 		
 		if check_password(password, user.password):
 			login(request, user)
 			return redirect("main:home")
 
-		return render(request, "auth/login.html", {"error": "password not match"})
+		return render(request, "auth.html", {"error": "password not match"})
 
 
 class LogoutView(View):
