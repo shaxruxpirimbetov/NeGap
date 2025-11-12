@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <h1>NeGap</h1>
+        <h1 onclick="location.assign('{% url 'main:home' %}')">NeGap</h1>
         <nav>
             <div class="link active">Главная</div>
             {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
@@ -29,14 +29,15 @@
 
         <div class="strong-centered-text">Получайте анонимные сообщения от друзей</div>
         <div class="p-centered-text">NeGap позволяет вам получать честные отзывы и анонимные сообщения от ваших друзей, коллег и поклонников без раскрытия их личности.</div>
-        <br>
+        <div class="br"></div>
         <div class="button-full" onclick="location.assign('{% url 'user:register' %}')">Создать профиль</div>
 
-        <br><br>
+        <div class="br"></div>
+        <div class="br"></div>
 
         <div class="strong-centered-text">Почему NeGap?</div>
         <div class="p-centered-text">Наша платформа предоставляет безопасный и простой способ получать честные отзывы и сообщения</div>
-        <br>
+        <div class="br"></div>
 
         <div class="why-boxes">
             <div class="card">
@@ -56,9 +57,9 @@
             </div>
         </div>
 
-        <br>
+        <div class="br"></div>
         <div class="button-medium">Регистрироаться</div>
-        <br>
+        <div class="br"></div>
         <div class="button-medium">Войти</div>
 
     </main>
@@ -66,8 +67,8 @@
 
         <p>© 2025 NeGap. Все права защищены.</p>
         <div class="links">
-            <a href="reg">Регистрация</a>
-            <a href="auth">Авторизоваться</a>
+            <a href="{% url 'user:register' %}">Регистрация</a>
+            <a href="{% url 'user:login' %}">Авторизоваться</a>
         </div>
 
     </footer>

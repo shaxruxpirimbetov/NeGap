@@ -28,9 +28,17 @@ class HomeView(View):
 class MessageView(View):
 	def get(self, request):
 		user_id = request.GET.get("user_id")
+		vmessage_id = request.GET.get("vmessage_id")
 		url = request.GET.get("url")
 		token = url.split("=")[1] if url else user_id
-
+		
+		if vmessage_id:
+			message = Message.objects.filter(id=vmessage_id).first()
+			if not message:
+				return HttpResponse("<h1>Message not found</h1>")
+			message = MessageSerializer(message).data
+			return render(request, "view-message.html", {"message": message})
+		
 		if not user_id and not token:
 			return render(request, "send_message.html", {"warning": "user is not defined"})
 
@@ -38,7 +46,7 @@ class MessageView(View):
 		user = User.objects.filter(first_name=token).first()
 		if not user:
 			return HttpResponse("User not found")
-
+		
 		if int(user.id) == request.user.id:
 			return render(request, "send_message.html", {"alert_err": "Нельзя отправить сообщение самому себе"})
 
@@ -50,7 +58,7 @@ class MessageView(View):
 	def post(self, request):
 		user_id = request.POST.get("user_id")
 		text = request.POST.get("text")
-
+		
 		if not text:
 			return render(request, "send_message.html", {"error": "text are required"})
 

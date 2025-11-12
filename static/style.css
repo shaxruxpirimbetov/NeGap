@@ -208,6 +208,7 @@ header nav .link:hover {
     align-items: center;
     border: 2px solid var(--first-color);
     border-radius: .5em;
+    gap: 1em;
 }
 .messages-list .message .text {
     white-space: nowrap;
@@ -235,6 +236,15 @@ header nav .link:hover {
     color: var(--first-color);
     white-space: nowrap;
     overflow: auto;
+}
+
+.view-message-container {}
+.view-message-container .text {
+    box-shadow: 0 0 .25em var(--second-color);
+    border-radius: 0em;
+    padding: .5em;
+    margin: 1em 0;
+    font-size: 1.15em;
 }
 
 footer {

@@ -12,69 +12,76 @@
 </head>
 <body>
     <header>
-        <h1>NeGap</h1>
+        <h1 onclick="location.assign('{% url 'main:home' %}')">NeGap</h1>
         <nav>
-            <div class="link active">Главная</div>
-            <div class="link">Выйти</div>
-            <div class="link">Профиль</div>
+            <div class="link active" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
+            {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
+            {% if request.user.is_anonymous %}
+                <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>
+                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
+            {% else %}
+                <div class="link" onclick="location.assign('{% url 'user:logout' %}')">Выйти</div>
+                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти в другую аккаунт</div>
+            {% endif %}
         </nav>
     </header>
     <main>
+    
+        <div class="strong-centered-text">Мы рады вас видеть снова {{ request.user }} 😉</div>
 
-        <div class="strong-centered-text">Мы рада вас видеть снова😉</div>
-
-        <br>
+        <div class="br"></div>
 
         <div class="card" style="border-radius: 1em;">
             <h2>Ваш ссылка</h2>
-            <p class="user-link">{{ request.build_absolute_uri }}/message/user_id={{ request.user.first_name }}</p>
+            <p class="user-link" onclick='navigator.clipboard.writeText(document.querySelector(".user-link").textContent); alert("Copied")'>{{ request.build_absolute_uri }}message?user_id={{ request.user.first_name }}</p>
 
             <div class="wrote-datas">
                 <div class="data">
                     <div class="title">Ваши сообщения</div>
-                    <div class="quantity">121</div>
+                    <div class="quantity">{{ my_messages|length }}</div>
                 </div>
                 <div class="data">
                     <div class="title">Вам написали</div>
-                    <div class="quantity">132</div>
+                    <div class="quantity">{{ messages|length }}</div>
                 </div>
                 <div class="data">
                     <div class="title">Вам ответили</div>
-                    <div class="quantity">102</div>
+                    <div class="quantity">{{ answers|length }}</div>
                 </div>
             </div>
             <div class="button-full" style="width: 15em; margin: auto; text-align: center;" onclick="location.assign('{% url 'main:message' %}')">Отправить сообщение</div>
 
-            <br><br>
+            <div class="br"></div>
+            <div class="br"></div>
             <h2>Также список сообщений</h2>
-            <br>
+            <div class="br"></div>
 
             <div class="messages-list">
+                <!-- 
                 <div class="message">
                     <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
                     <div class="icon"></div>
                 </div>
-                <div class="message">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
-                    <div class="icon"></div>
-                </div>
-                <div class="message">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
-                    <div class="icon"></div>
-                </div>
-                <div class="message">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>
-                    <div class="icon"></div>
-                </div>
+                -->
+                {% if messages|length == 0 %}
+                    <div class="p-centered-text">Тут будут отображаться сообщения отправленные вам</div>
+                {% else %}
+                    {% for message in messages %}
+                        <div class="message" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
+                            <div class="text">{{ message.text }}</div>
+                            <div class="icon"></div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
         </div>
 
-        <br>
+        <div class="br"></div>
 
         <div class="strong-centered-text">Почему NeGap?</div>
         <div class="p-centered-text">Наша платформа предоставляет безопасный и простой способ получать честные отзывы и сообщения</div>
-        <br>
+        <div class="br"></div>
 
         <div class="why-boxes">
             <div class="card">
@@ -99,8 +106,8 @@
 
         <p>© 2025 NeGap. Все права защищены.</p>
         <div class="links">
-            <a href="reg">Регистрация</a>
-            <a href="auth">Авторизоваться</a>
+            <a href="{% url 'user:register' %}">Регистрация</a>
+            <a href="{% url 'user:login' %}">Авторизоваться</a>
         </div>
 
     </footer>

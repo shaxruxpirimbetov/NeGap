@@ -65,7 +65,7 @@ class LoginView(View):
 
 class LogoutView(View):
 	def get(self, request):
-		return render(request, "confirm.html", {"message": "Logout?"})
+		return render(request, "confirm.html", {"message": "Вы точно хотите выйти из аккаунта?", "button_title": "Выйти"})
 
 	def post(self, request):
 		logout(request)

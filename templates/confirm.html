@@ -14,7 +14,7 @@
     <header>
         <h1 onclick="location.assign('{% url 'main:home' %}')">NeGap</h1>
         <nav>
-            <div class="link" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
+            <div class="link active" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
             {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
             {% if request.user.is_anonymous %}
                 <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>
@@ -27,38 +27,14 @@
     </header>
     <main>
         
-        {% if alert_err %}
-            <script>alert("Нельзя отправить сообщение самому себе"); history.back() </script>{% endif %}
-
-        {% if warning == "user is not defined" %}
-            <div class="card" style="width: 100%;">
-                <div class="strong-centered-text">Введите ссылку пользователя</div>
-                <form class="form-container" style="margin: auto; width: 100%;">
-                    <div class="input-box">
-                        <label>Ссылка</label>
-                        <input name="url" type="url" placeholder="Ссылка">
-                    </div>
-                    <button>Найти пользователя</button>
-                </form>
-            </div>
-        {% else %}
-            <form class="form-container send-message-from" method="post">
+        <div class="card">
+            <form method="post" class="form-container" style="width: 100%;">
                 {% csrf_token %}
-                <div class="title">Отправить к</div>
-                <div class="receiver-box">
-                    <div class="username">{{ user.username }}</div>
-                    <div class="link">{{ request.build_absolute_uri }}message?user_id={{ user.first_name }}</div>
-                </div>
-                <div class="input-box">
-                    <label for="text">Сообщение</label>
-                    <textarea name="text"></textarea>
-                </div>
-                <input type="number" name="user_id" style="display: none" value="{{ user.id }}">
-                <button>Отправить сообщение</button>
+                <div class="strong-centered-text">{{ message }}</div>
+                <button>{{ button_title }}</button>
             </form>
-        {% endif %}
-
-
+        </div>
+        
     </main>
     <footer>
 
