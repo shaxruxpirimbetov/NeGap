@@ -67,10 +67,12 @@
                     <div class="p-centered-text">Тут будут отображаться сообщения отправленные вам</div>
                 {% else %}
                     {% for message in messages %}
+                        {% if not message.is_answered %}
                         <div class="message" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
                             <div class="text">{{ message.text }}</div>
                             <div class="icon"></div>
                         </div>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>

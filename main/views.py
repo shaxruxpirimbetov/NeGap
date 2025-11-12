@@ -15,7 +15,7 @@ class HomeView(View):
 			messages = MessageSerializer(messages, many=True).data
 			my_messages = Message.objects.filter(sender=request.user)
 			my_messages = MessageSerializer(my_messages, many=True).data
-			answers = Answer.objects.filter(receiver=request.user)
+			answers = Answer.objects.filter(message_sender=request.user)
 			answers = AnswerSerializer(answers, many=True).data
 			context["messages"] = messages
 			context["my_messages"] = my_messages
@@ -42,10 +42,9 @@ class MessageView(View):
 		if not user_id and not token:
 			return render(request, "send_message.html", {"warning": "user is not defined"})
 
-		print(token)
 		user = User.objects.filter(first_name=token).first()
 		if not user:
-			return HttpResponse("User not found")
+			return render(request, "send_message.html", {"error": "Пользователь с такой ссылкой на найден", "warning": "user is not defined"})
 		
 		if int(user.id) == request.user.id:
 			return render(request, "send_message.html", {"alert_err": "Нельзя отправить сообщение самому себе"})
@@ -73,48 +72,27 @@ class MessageView(View):
 class AnswerView(View):
 	def get(self, request):
 		message_id = request.GET.get("message_id")
-		answered_id = request.GET.get("answered_id")
-		is_empty = request.GET.get("is_empty")
-
-		if is_empty == "true" and message_id:
-			message = Message.objects.filter(id=message_id).first()
-			message = MessageSerializer(message).data
-			user = User.objects.filter(id=message["receiver"]).first()
-			return render(request, "answer_view.html", {"message": message, "user": user})
-
-		if not message_id and not answered_id:
-			return HttpResponse(f"<h1>message not found</h1>")
-
-		if answered_id:
-			answered = Answer.objects.filter(id=answered_id).first()
-			if not answered:
-				return HttpResponse("Not found 404")
-
-			message = Message.objects.filter(id=answered.message.id).first()
-			answered = AnswerSerializer(answered).data
-			message = MessageSerializer(message).data
-			return render(request, "answer_view.html", {"message": message, "answer": answered})
-
+		
+		if not message_id:
+			return redirect("main:home")
+		
 		message = Message.objects.filter(id=message_id).first()
-		if not message:
-			return HttpResponse("message not found")
-
-		if not message.sender:
-			return render(request, "answer_view.html", {"message": message, "is_sender_none": True})
-
 		message = MessageSerializer(message).data
 		return render(request, "answer.html", {"message": message})
 
 	def post(self, request):
 		message_id = request.POST.get("message_id")
-		receiver_id = request.POST.get("receiver_id")
+		message_sender_id = request.GET.get("message_sender_id")
 		text = request.POST.get("text")
+		
+		if not text:
+			return render(request, "answer.html", {"error": "Ответ должен быть больше 0 символов"})
 
 		message = Message.objects.filter(id=message_id).first()
 		if not message:
 			return HttpResponse("message not found")
 
-		Answer.objects.create(message=message, text=text, receiver_id=receiver_id)
+		Answer.objects.create(message=message, text=text, message_sender=message.sender)
 		message.is_answered = True
 		message.save()
 		return redirect("main:home")

@@ -14,7 +14,7 @@
     <header>
         <h1>NeGap</h1>
         <nav>
-            <div class="link active">Главная</div>
+            <div class="link" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
             {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
             {% if request.user.is_anonymous %}
                 <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>
@@ -27,19 +27,29 @@
     </header>
     <main>
 
-        <div class="view-message-container">
-            <div class="strong-centered-text">Сообщение к тебе 🥷</div>
-            <div class="text">{{ message.text }}</div>
-            <div class="button-full" onclick="location.assign('/answer?message_id={{ message.id }}')">Ответить</div>
+        <div class="answer-container">
+            <form class="form-container" style="width: 100%" method="post">
+                {% csrf_token %}
+                <div class="title">Пишите ответ на:</div>
+                {% if error %}<div class="error-box">{{ error }}</div>{% endif %}
+                <div class="message-text">{{ message.text }}</div>
+                <div class="input-box">
+                    <textarea name="text" name="text"></textarea>
+                </div>
+                <input type="number" style="display: none;" name="message_id" value="{{ message.id }}">
+                <button class="button-full">Отправить</button>
+            </form>
         </div>
-
+        
     </main>
     <footer>
+
         <p>© 2025 NeGap. Все права защищены.</p>
         <div class="links">
             <a href="reg">Регистрация</a>
             <a href="auth">Авторизоваться</a>
         </div>
+        
     </footer>
 </body>
 </html>

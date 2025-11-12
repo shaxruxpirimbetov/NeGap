@@ -241,10 +241,13 @@ header nav .link:hover {
 .view-message-container {}
 .view-message-container .text {
     box-shadow: 0 0 .25em var(--second-color);
-    border-radius: 0em;
+    border-radius: 1em;
     padding: .5em;
     margin: 1em 0;
     font-size: 1.15em;
+}
+.answer-container {
+    padding: .5em;
 }
 
 footer {

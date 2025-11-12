@@ -11,7 +11,7 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Message to {self.receiver}"
+        return f"Message from {self.sender} to {self.receiver} #{self.id}"
 
     class Meta:
         verbose_name = "Message"
@@ -20,7 +20,7 @@ class Message(models.Model):
 
 class Answer(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="answer_message")
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="answer_receiver")
+    message_sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_message_sender")
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

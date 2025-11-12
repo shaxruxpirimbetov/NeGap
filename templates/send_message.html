@@ -34,6 +34,7 @@
             <div class="card" style="width: 100%;">
                 <div class="strong-centered-text">Введите ссылку пользователя</div>
                 <form class="form-container" style="margin: auto; width: 100%;">
+                {% if error %}<div class="error-box">{{ error }}</div> {% endif %}
                     <div class="input-box">
                         <label>Ссылка</label>
                         <input name="url" type="url" placeholder="Ссылка">
