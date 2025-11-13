@@ -36,7 +36,13 @@ class MessageView(View):
 			message = Message.objects.filter(id=vmessage_id).first()
 			if not message:
 				return HttpResponse("<h1>Message not found</h1>")
+			
 			message = MessageSerializer(message).data
+			if message["is_answered"]:
+				answer = Answer.objects.filter(message_id=message["id"]).first()
+				answer = AnswerSerializer(answer).data
+				message["answer"] = answer
+			message["is_my"] = True if message["sender"] == request.user.id else False
 			return render(request, "view-message.html", {"message": message})
 		
 		if not user_id and not token:
@@ -96,3 +102,21 @@ class AnswerView(View):
 		message.is_answered = True
 		message.save()
 		return redirect("main:home")
+
+
+class MessageFilterView(View):
+	def get(self, request):
+		filter = request.GET.get("filter")
+		if filter == "fme":
+			messages = Message.objects.filter(receiver=request.user).all()
+			messages = MessageSerializer(messages, many=True).data
+		elif filter == "ansme":
+			answers = Answer.objects.filter(message_sender=request.user).all()
+			answers = AnswerSerializer(answers, many=True).data
+			messages = answers
+		else:
+			messages = Message.objects.filter(sender=request.user).all()
+			messages = MessageSerializer(messages, many=True).data
+		return render(request, "messages.html", {"messages": messages, "filter": filter})
+	
+

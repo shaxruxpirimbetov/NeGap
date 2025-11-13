@@ -12,9 +12,9 @@
 </head>
 <body>
     <header>
-        <h1 onclick="location.assign('{% url 'main:home' %}')">NeGap</h1>
-        <nav>
-            <div class="link" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
+        <h1>NeGap</h1>
+        <nav> {{ message }}
+            <div class="link active" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
             {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
             {% if request.user.is_anonymous %}
                 <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>
@@ -27,12 +27,23 @@
     </header>
     <main>
         
-        <div class="card">
-            <form method="post" class="form-container" style="width: 100%;">
-                {% csrf_token %}
-                <div class="strong-centered-text">{{ message }}</div>
-                <button>{{ button_title }}</button>
-            </form>
+        <div class="strong-centered-text">
+        {% if filter == "fme" %}
+            Сообщений отправленные вам
+        {% elif filter == "ansme" %}
+            Вам ответили
+        {% else %}
+            Сообщение отправленные вами
+        {% endif %}
+        </div>
+        
+        <div class="for-me-messages">
+           {% for message in messages %}
+                <div class="message" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
+                    <div class="text">{{ message.text }}</div>
+                    <div class="icon"></div>
+                </div>
+            {% endfor %}
         </div>
         
     </main>
@@ -40,10 +51,10 @@
 
         <p>© 2025 NeGap. Все права защищены.</p>
         <div class="links">
-            <a href="reg">Регистрация</a>
-            <a href="auth">Авторизоваться</a>
+            <a href="{% url 'user:register' %}">Регистрация</a>
+            <a href="{% url 'user:login' %}">Авторизоваться</a>
         </div>
-
+        
     </footer>
 </body>
 </html>

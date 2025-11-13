@@ -250,6 +250,37 @@ header nav .link:hover {
     padding: .5em;
 }
 
+.for-me-messages {
+    display: flex;
+    flex-direction: column;
+    gap: .25em;
+    width: 100%;
+}
+.for-me-messages .message {
+    display: flex;
+    justify-content: space-between;
+    gap: 60%;
+    border: 2px solid #333;
+    padding: .5em;
+    border-radius: .25em;
+    width: 100%;
+    align-items: center;
+    font-size: 1.25em;
+}
+.for-me-messages .message .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+.for-me-messages .message .icon {
+    border-right: 5px solid black;
+    border-bottom: 5px solid black;
+    padding: .5em;
+    transform: rotate(-45deg);
+    font-size: .5em;
+}
+
 footer {
     background: var(--second-color);
     padding: 1em;

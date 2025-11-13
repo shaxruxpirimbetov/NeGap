@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "shaxcoder.pythonanywehre.com",
-    "127.0.0.1"
+    "127.0.0.1",
+    "10.137.172.19"
 ]
 
 

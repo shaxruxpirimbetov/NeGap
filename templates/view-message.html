@@ -28,9 +28,39 @@
     <main>
 
         <div class="view-message-container">
-            <div class="strong-centered-text">Сообщение к тебе 🥷</div>
-            <div class="text">{{ message.text }}</div>
-            <div class="button-full" onclick="location.assign('/answer?message_id={{ message.id }}')">Ответить</div>
+
+            {% if message.receiver == request.user.id and not message.is_answered %}
+            <div class="view-message-container">
+                <div class="strong-centered-text">Сообщение к вам 🥷</div>
+                <div class="text">{{ message.text }}</div>
+                <div class="button-full" onclick="location.assign('/answer?message_id={{ message.id }}')">Ответить</div>
+            </div>
+            {% endif %}
+            
+            {% if message.is_my and not message.is_answered %}
+            <div class="view-message-container">
+                <div class="strong-centered-text">Ваш сообщение 🥷</div>
+                <div class="text">{{ message.text }}</div>
+                <div class="button-full">Открыть получателя</div>
+            </div>
+            {% endif %}
+            
+            {% if message.is_my and message.is_answered %}
+            <div class="view-message-container">
+                <div class="strong-centered-text">Ваш сообщение 🥷</div>
+                <div class="text"><div class="p-centered-text">Вы отправили</div>{{ message.text }}</div>
+                <div class="text"><div class="p-centered-text">Вам ответ</div>{{ message.answer.text }}#</div>
+            </div>
+            {% endif %}
+            
+            {% if not message.is_my and message.is_answered %}
+            <div class="view-message-container">
+                <div class="strong-centered-text">Ваш ответ 🥷</div>
+                <div class="text"><div class="p-centered-text">Вам отправил</div>{{ message.text }}</div>
+                <div class="text"><div class="p-centered-text">Ваш ответ</div>{{ message.answer.text }}</div>
+            </div>
+            {% endif %}
+            
         </div>
 
     </main>

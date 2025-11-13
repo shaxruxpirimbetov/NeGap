@@ -36,15 +36,15 @@
             <p class="user-link" onclick='navigator.clipboard.writeText(document.querySelector(".user-link").textContent); alert("Copied")'>{{ request.build_absolute_uri }}message?user_id={{ request.user.first_name }}</p>
 
             <div class="wrote-datas">
-                <div class="data">
+                <div class="data" onclick="location.assign('/fmessage?filter=my')">
                     <div class="title">Ваши сообщения</div>
                     <div class="quantity">{{ my_messages|length }}</div>
                 </div>
-                <div class="data">
+                <div class="data" onclick="location.assign('/fmessage?filter=fme')">
                     <div class="title">Вам написали</div>
                     <div class="quantity">{{ messages|length }}</div>
                 </div>
-                <div class="data">
+                <div class="data" onclick="location.assign('/fmessage?filter=ansme')">
                     <div class="title">Вам ответили</div>
                     <div class="quantity">{{ answers|length }}</div>
                 </div>
