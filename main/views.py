@@ -30,7 +30,11 @@ class MessageView(View):
 		user_id = request.GET.get("user_id")
 		vmessage_id = request.GET.get("vmessage_id")
 		url = request.GET.get("url")
-		token = url.split("=")[1] if url else user_id
+		try:
+			token = url.split("=")[1] if url else user_id
+		except:
+			return render(request, "send_message.html", {"error": "Пользователь с такой ссылкой на найден", "warning": "user is not defined"})
+		
 		
 		if vmessage_id:
 			message = Message.objects.filter(id=vmessage_id).first()
