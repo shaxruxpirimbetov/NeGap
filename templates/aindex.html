@@ -26,6 +26,18 @@
         </nav>
     </header>
     <main>
+        
+        {% if new_answers %}
+        <div class="notification">
+            <div class="text">Вам ответили</div>
+            <a href="/fmessage/?filter=ansme" class="link">Открыть</a>
+        </div>
+        {% elif didnt_answered %}
+         <div class="notification">
+            <div class="text">Есть сообщений, которые вы не ответили)</div>
+            <a href="/fmessage/?filter=fme" class="link">Открыть</a>
+        </div>
+        {% endif %}
     
         <div class="strong-centered-text">Мы рады вас видеть снова {{ request.user }} 😉</div>
 
@@ -56,7 +68,7 @@
             <h2>Также список сообщений</h2>
             <div class="br"></div>
 
-            <div class="messages-list">
+            <div class="messages-list" id="msgl">
                 <!-- 
                 <div class="message">
                     <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore earum libero perferendis distinctio explicabo. Delectus consectetur in, corrupti quas aperiam sequi dolorem velit cupiditate doloribus repellendus eum doloremque praesentium id!</div>

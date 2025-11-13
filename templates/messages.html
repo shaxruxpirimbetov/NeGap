@@ -39,7 +39,7 @@
         
         <div class="for-me-messages">
            {% for message in messages %}
-                <div class="message" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
+                <div class="message {% if message.is_seen %}isseen{% elif not message.is_answered %}isanswered{% endif %}" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
                     <div class="text">{{ message.text }}</div>
                     <div class="icon"></div>
                 </div>

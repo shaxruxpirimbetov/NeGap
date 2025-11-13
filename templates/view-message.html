@@ -12,9 +12,9 @@
 </head>
 <body>
     <header>
-        <h1>NeGap</h1>
+        <h1 onclick="location.assign('{% url 'main:home' %}')">NeGap</h1>
         <nav>
-            <div class="link active">Главная</div>
+            <div class="link" onclick="location.assign('{% url 'main:home' %}')">Главная</div>
             {% if request.user.username == "shaxrux" %} <div class="link" onclick="location.assign('/admin/')">Админ</div> {% endif %}
             {% if request.user.is_anonymous %}
                 <div class="link" onclick="location.assign('{% url 'user:register' %}')">Регистрация</div>

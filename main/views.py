@@ -15,11 +15,15 @@ class HomeView(View):
 			messages = MessageSerializer(messages, many=True).data
 			my_messages = Message.objects.filter(sender=request.user)
 			my_messages = MessageSerializer(my_messages, many=True).data
+			didnt_answered = Message.objects.filter(receiver=request.user, is_answered=False)
+			new_answer = Answer.objects.filter(message_sender=request.user, is_seen=False)
 			answers = Answer.objects.filter(message_sender=request.user)
 			answers = AnswerSerializer(answers, many=True).data
 			context["messages"] = messages
 			context["my_messages"] = my_messages
 			context["answers"] = answers
+			context["new_answers"] = True if new_answer else False
+			context["didnt_answered"] = True if didnt_answered else False
 			return render(request, "aindex.html", context)
 
 		return render(request, "index.html", context)
@@ -44,6 +48,8 @@ class MessageView(View):
 			message = MessageSerializer(message).data
 			if message["is_answered"]:
 				answer = Answer.objects.filter(message_id=message["id"]).first()
+				answer.is_seen = True
+				answer.save()
 				answer = AnswerSerializer(answer).data
 				message["answer"] = answer
 			message["is_my"] = True if message["sender"] == request.user.id else False

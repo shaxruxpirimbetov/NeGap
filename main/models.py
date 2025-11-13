@@ -22,6 +22,7 @@ class Answer(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="answer_message")
     message_sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_message_sender", blank=True, null=True)
     text = models.TextField()
+    is_seen = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
