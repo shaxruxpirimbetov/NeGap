@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-yet&bp(12(yfasuh83ifd((u+twn*yb@#^fgzgr*lt!!2zr#uf
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "shaxcoder.pythonanywehre.com",
+    "shaxrux.pythonanywhere.com",
     "127.0.0.1",
     "10.137.172.19"
 ]

@@ -2,6 +2,9 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 
+python manage.py collectstatic
+
+
 git config --global user.email "shaxruxpirimbetov@gmail.com"
 git config --global user.name "shaxruxpirimbetov"
 
