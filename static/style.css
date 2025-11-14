@@ -219,7 +219,6 @@ header nav .link:hover {
     border-radius: .5em;
     gap: 1em;
 }
-.messages-list .message.isanswered { border: 2px solid var(--first-color); }    
 .messages-list .message .text {
     white-space: nowrap;
     overflow: hidden;
@@ -277,7 +276,8 @@ header nav .link:hover {
     align-items: center;
     font-size: 1.25em;
 }
-.for-me-messages .message.isseen { border: 2px solid #333; }
+.for-me-messages .message.isseen,
+.for-me-messages .message.isanswered { border: 2px solid #333; }
 .for-me-messages .message .text {
     overflow: hidden;
     text-overflow: ellipsis;

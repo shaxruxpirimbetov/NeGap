@@ -21,7 +21,7 @@
                 <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% else %}
                 <div class="link" onclick="location.assign('{% url 'user:logout' %}')">Выйти</div>
-                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти в другую аккаунт</div>
+                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% endif %}
         </nav>
     </header>
@@ -39,7 +39,7 @@
         
         <div class="for-me-messages">
            {% for message in messages %}
-                <div class="message {% if message.is_seen %}isseen{% elif not message.is_answered %}isanswered{% endif %}" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
+                <div class="message {% if message.is_answered and not message.is_my %} isanswered {% elif message.is_seen %}isseen{% endif %}" onclick="location.assign('/message?vmessage_id={{ message.id }}')">
                     <div class="text">{{ message.text }}</div>
                     <div class="icon"></div>
                 </div>

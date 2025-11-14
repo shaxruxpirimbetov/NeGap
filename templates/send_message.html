@@ -21,7 +21,7 @@
                 <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% else %}
                 <div class="link" onclick="location.assign('{% url 'user:logout' %}')">Выйти</div>
-                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти в другую аккаунт</div>
+                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% endif %}
         </nav>
     </header>

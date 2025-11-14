@@ -21,7 +21,7 @@
                 <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% else %}
                 <div class="link" onclick="location.assign('{% url 'user:logout' %}')">Выйти</div>
-                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти в другую аккаунт</div>
+                <div class="link" onclick="location.assign('{% url 'user:login' %}')">Войти</div>
             {% endif %}
         </nav>
     </header>
@@ -49,7 +49,7 @@
             <div class="view-message-container">
                 <div class="strong-centered-text">Ваш сообщение 🥷</div>
                 <div class="text"><div class="p-centered-text">Вы отправили</div>{{ message.text }}</div>
-                <div class="text"><div class="p-centered-text">Вам ответ</div>{{ message.answer.text }}#</div>
+                <div class="text"><div class="p-centered-text">Вам ответ</div>{{ message.answer.text }}</div>
             </div>
             {% endif %}
             
