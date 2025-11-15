@@ -12,4 +12,8 @@ git remote add origin https://github.com/shaxruxpirimbetov/NeGap.git
 
 git clone https://github.com/shaxruxpirimbetov/NeGap.git
 
-text
+
+git add .
+git commit -m "NeGap"
+git push
+
