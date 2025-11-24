@@ -292,6 +292,40 @@ header nav .link:hover {
     font-size: .5em;
 }
 
+.instruct-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+.instruct-container .instruct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.instruct-container .instruct .number {
+    background: var(--first-color);
+    font-size: 2em;
+    padding: .75em;
+    border-radius: 50%;
+    color: white;
+    position: relative;
+}
+.instruct-container .instruct .number strong {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.instruct-container .instruct .title {
+    font-size: 1.5em;
+    font-weight: 750;
+    margin: .5em 0;
+    color: var(--first-color);
+}
+.instruct-container .instruct .text {
+    text-align: center;
+}
+
 footer {
     background: var(--second-color);
     padding: 1em;
@@ -323,4 +357,5 @@ footer .links a {
 
 @media (min-width: 1200px) {
     .why-boxes { flex-direction: row; justify-content: space-between; width: 100%; padding: 0 1em; }
+    .instruct-container { flex-direction: row; text-align: center; }
 }
