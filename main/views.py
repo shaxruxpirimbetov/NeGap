@@ -1,8 +1,8 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from user.serializers import UserSerializer
+from django.contrib.auth.mixins import LoginRequiredMixin
+from user.models import User
 from .models import Message, Answer
 from .serializers import MessageSerializer, AnswerSerializer
 
@@ -29,7 +29,8 @@ class HomeView(View):
 		return render(request, "index.html", context)
 
 
-class MessageView(View):
+class MessageView(LoginRequiredMixin, View):
+	login_url = "user:login"
 	def get(self, request):
 		user_id = request.GET.get("user_id")
 		vmessage_id = request.GET.get("vmessage_id")
@@ -58,16 +59,13 @@ class MessageView(View):
 		if not user_id and not token:
 			return render(request, "send_message.html", {"warning": "user is not defined"})
 
-		user = User.objects.filter(first_name=token).first()
+		user = User.objects.filter(key=token).first()
 		if not user:
 			return render(request, "send_message.html", {"error": "Пользователь с такой ссылкой на найден", "warning": "user is not defined"})
 		
 		if int(user.id) == request.user.id:
 			return render(request, "send_message.html", {"alert_err": "Нельзя отправить сообщение самому себе"})
 
-		user = UserSerializer(user).data
-		if request.user.is_anonymous:
-			return render(request, "send_message.html", {"user": user, "warning": "You cant see answer without login"})
 		return render(request, "send_message.html", {"user": user})
 
 	def post(self, request):

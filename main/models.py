@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
+from user.models import User
 from django.db import models
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender", blank=True, null=True)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_receiver")
     text = models.TextField()
     is_answered = models.BooleanField(default=False)
