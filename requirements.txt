@@ -2,5 +2,3 @@ django
 djangorestframework
 djangorestframework-simplejwt
 pillow
-
-kk
