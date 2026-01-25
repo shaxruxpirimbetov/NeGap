@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout
-from .serializers import UserSerializer
 from .models import User
 import secrets
 
